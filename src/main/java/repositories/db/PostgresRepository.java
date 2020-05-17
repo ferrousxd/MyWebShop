@@ -11,7 +11,7 @@ public class PostgresRepository implements IDBRepository {
     public Connection getConnection() {
         try {
             String connStr = "jdbc:postgresql://localhost:5432/mydatabase";
-            Connection conn = DriverManager.getConnection(connStr, "postgres", "chinga470");
+            Connection conn = DriverManager.getConnection(connStr, "postgres", "12345");
             return conn;
         } catch (SQLException ex) {
             ex.printStackTrace();
