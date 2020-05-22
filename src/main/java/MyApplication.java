@@ -19,6 +19,7 @@ public class MyApplication extends Application {
         hs.add(CorsFilter.class);
         hs.add(AuthorizationController.class);
         return hs;
+        //Comment!!!!
     }
 }
 
