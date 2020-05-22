@@ -1,12 +1,15 @@
 package repositories.entities;
 
+import domain.SigninData;
 import domain.User;
 
 import repositories.db.PostgresRepository;
 import repositories.interfaces.IDBRepository;
 import repositories.interfaces.IEntityRepository;
 
+import javax.ws.rs.BadRequestException;
 import javax.xml.stream.events.StartDocument;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,9 +32,7 @@ public class UserRepository implements IEntityRepository<User> {
                     "','"+ entity.getBirthday() +"')";
             stmt.execute(sql);
         } catch(SQLException ex) {
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new BadRequestException();
         }
     }
 
@@ -64,7 +65,28 @@ public class UserRepository implements IEntityRepository<User> {
             }
             return users;
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            throw new BadRequestException();
+        }
+    }
+
+    public User findUserByLogin(SigninData data) {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try {
+            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
+            stmt.setString(1, data.getUsername());
+            stmt.setString(2, data.getPassword());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                User user = new User(rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getDate("birthday"));
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throw new BadRequestException();
         }
         return null;
     }

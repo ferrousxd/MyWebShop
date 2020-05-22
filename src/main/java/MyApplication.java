@@ -1,4 +1,6 @@
+import controllers.AuthorizationController;
 import controllers.UserController;
+import filters.CorsFilter;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.MultiPartMediaTypes;
 
@@ -14,6 +16,8 @@ public class MyApplication extends Application {
         Set<Class<?>> hs = new HashSet<>();
         hs.add(MultiPartMediaTypes.class);
         hs.add(UserController.class);
+        hs.add(CorsFilter.class);
+        hs.add(AuthorizationController.class);
         return hs;
     }
 }

@@ -31,6 +31,14 @@ public class User {
         this.birthday = birthday;
     }
 
+    public User(long id, String name, String surname, String username, Date birthday) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.birthday = birthday;
+    }
+
     public long getId() {
         return id;
     }
