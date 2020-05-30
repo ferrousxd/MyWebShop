@@ -10,33 +10,29 @@ public class User {
     private String password;
     private Date birthday;
 
-    public User() {
-
-    }
-
-    public User(String name, String surname, String username, String password, Date birthday) {
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.password = password;
-        this.birthday = birthday;
+    public User(long id, String name, String surname, String username, Date birthday) {
+        setId(id);
+        setName(name);
+        setSurname(surname);
+        setUsername(username);
+        setBirthday(birthday);
     }
 
     public User(long id, String name, String surname, String username, String password, Date birthday) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.password = password;
-        this.birthday = birthday;
+        setId(id);
+        setName(name);
+        setSurname(surname);
+        setUsername(username);
+        setPassword(password);
+        setBirthday(birthday);
     }
 
-    public User(long id, String name, String surname, String username, Date birthday) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.birthday = birthday;
+    public User(String name, String surname, String username, String password, Date birthday) {
+        setName(name);
+        setSurname(surname);
+        setUsername(username);
+        setPassword(password);
+        setBirthday(birthday);
     }
 
     public long getId() {
@@ -85,17 +81,5 @@ public class User {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", birthday=" + birthday +
-                '}';
     }
 }

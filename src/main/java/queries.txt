@@ -1,0 +1,41 @@
+    // Creating tables
+
+    CREATE TABLE public.users
+    (
+        id SERIAL,
+        name character varying(255),
+        surname character varying(255),
+        username character varying(255),
+        password character varying(255),
+        birthday date,
+        CONSTRAINT users_pkey PRIMARY KEY (id)
+    )
+
+    CREATE TABLE public.products
+    (
+        id SERIAL,
+        name character varying(255),
+        category character varying(255),
+        description text,
+        price real,
+        CONSTRAINT products_pkey PRIMARY KEY (id)
+    )
+
+
+
+    // Inserting records to our tables
+
+    INSERT INTO public.users
+        (name, surname, username, password, birthday)
+        VALUES
+            ('Chingiz', 'Azimbayev', 'chinga', 'helloworld', '11-26-2001'),
+            ('Madiyar', 'Ussabekov', 'MrMaddy', 'pro100password', '04-14-1999');
+
+    INSERT INTO public.products
+        (name, category, description, price)
+        VALUES
+            ('Apple MacBook Pro 16 2019 Space Gray', 'Notebooks', 'The MacBook Pro 16-inch is not just the most powerful MacBook Apple`s ever made – it`s also the best. By listening to its customers and taking on board the criticisms of previous models, Apple has made a MacBook Pro that improves on nearly every aspect of the iconic workstation. If you have the budget for it, this is one of the best laptops you can buy.', 2799.99),
+            ('ASUS ROG Zephyrus G14', 'Notebooks', 'Dynamic and ready to travel, the pioneering ROG Zephyrus G14 is the world’s most powerful 14-inch Windows 10 Pro gaming laptop. Outclass the competition with up to an 8-core AMD Ryzen™ 9 4900HS CPU and potent GeForce RTX™ 2060 GPU that speed through everyday multitasking and gaming. Customize your fit with either a 120Hz gaming display or high-resolution WQHD panel, both Pantone® Validated for superb color accuracy. Quad speakers pump out incredible Dolby Atmos sound for immersive movies, games, music, and more. Live life at Zephyrus speed with a light and portable gaming laptop, and be active anywhere.', 1449.99),
+            ('iPhone 11 Pro Max', 'Smartphones', 'iPhone 11 Pro Max is the most powerful and advanced smartphone Apple have ever made. It is packed with sophisticated technology that pros can count on to get their work done, and for anyone who wants the very best device made, even if they are not a pro. iPhone 11 Pro has the first triple-camera system in iPhone and is far and away the best camera we’ve ever made, it provides our customers with great range of creative control and advanced photo and video editing features in iOS 13. The Super Retina XDR is the brightest and most advanced display in iPhone and the A13 Bionic chip sets a new bar for smartphone performance and power efficiency.', 1449.99),
+            ('AirPods Pro', 'Headphones', 'AirPods Pro have been designed to deliver Active Noise Cancellation for immersive sound, Transparency mode so you can hear your surroundings, and a customizable fit for all-day comfort. Just like AirPods, AirPods Pro connect magically to your iPhone or Apple Watch. And they`re ready to use right out of the case.', '249.99'),
+            ('SanDisk 2TB Extreme PRO Portable External SSD', 'External Solid State Drives', 'SanDisk’s Extreme Pro portable SSD is bigger, faster, and more durable than its predecessor. It boasts broad compatibility and is also quite secure. With a tough and weather-resistant design, the Extreme Pro will be ready for action, even for the most adventurous. Plus, it is capable of performance of up to 1,050MBps with its USB-C 10 Gbps interface. Its only drawback? It`s not for the faint of wallet.', 369.99)
