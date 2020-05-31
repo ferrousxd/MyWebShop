@@ -72,6 +72,7 @@ public class UserController {
                 .build();
     }
 
+    @JWTTokenNeeded
     @POST
     @Path("/update")
     public Response getUserUpdate(@FormDataParam("id") int id,
@@ -94,4 +95,21 @@ public class UserController {
                 .entity(user)
                 .build();
     }
+
+    @JWTTokenNeeded
+    @POST
+    @Path("/delete")
+    public Response deleteUser(@FormDataParam("id") int id,
+                               @FormDataParam("username") String username
+                               ) {
+        UserRepository userRepo = new UserRepository();
+        User user = new User(id, username);
+        try {
+            userRepo.remove(user);
+        } catch (BadRequestException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Can not delete the user").build();
+        }
+        return Response.status(Response.Status.OK).entity(user).build();
+    }
+
 }

@@ -32,10 +32,10 @@ public class ProductRepository implements IProductRepository {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
             String sql = "UPDATE products SET"
-                    + " name = " + entity.getName()
-                    + ", category = " + entity.getCategory()
-                    + ", description = " + entity.getDescription()
-                    + ", price = "+ entity.getPrice() +
+                    + " name = '" + entity.getName()
+                    + "', category = '" + entity.getCategory()
+                    + "', description = '" + entity.getDescription()
+                    + "', price = "+ entity.getPrice() +
                     " WHERE id = " + entity.getId();
             stmt.execute(sql);
         } catch(SQLException ex) {
@@ -47,7 +47,7 @@ public class ProductRepository implements IProductRepository {
     public void remove(Product entity) {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
-            String sql = "DELETE FROM products WHERE id = " + entity.getId();
+            String sql = "DELETE FROM products WHERE id = " + entity.getId() + " name = '" + entity.getName() + "'";
             stmt.execute(sql);
         } catch(SQLException ex) {
             throw new BadRequestException();

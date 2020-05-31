@@ -10,6 +10,11 @@ public class User {
     private String password;
     private Date birthday;
 
+    public User(long id, String username) {
+        setId(id);
+        setUsername(username);
+    }
+
     public User(long id, String name, String surname, String password) {
         setId(id);
         setName(name);

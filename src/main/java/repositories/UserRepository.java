@@ -48,11 +48,14 @@ public class UserRepository implements IUserRepository {
     public void remove(User entity) {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
-            String sql = "DELETE FROM products WHERE username = " + entity.getUsername();
+            String sql = "DELETE FROM users WHERE id = " + entity.getId() +
+                " AND username = '" + entity.getUsername() + "'";
             stmt.execute(sql);
-        } catch(SQLException ex) {
+        }catch (SQLException ex) {
             throw new BadRequestException();
         }
+
+
     }
 
     @Override

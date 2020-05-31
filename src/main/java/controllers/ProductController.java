@@ -2,6 +2,8 @@ package controllers;
 
 import domain.Product;
 import filters.customAnnotation.JWTTokenNeeded;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+import repositories.ProductRepository;
 import services.ProductService;
 import services.interfaces.IProductService;
 
@@ -63,5 +65,65 @@ public class ProductController {
                     .entity(product)
                     .build();
         }
+    }
+
+    @JWTTokenNeeded
+    @POST
+    @Path("/add")
+    public Response addProduct(@FormDataParam("name") String name,
+                               @FormDataParam("category") String category,
+                               @FormDataParam("description") String description,
+                               @FormDataParam("price") double price
+    )
+    {
+        ProductRepository prodRepo = new ProductRepository();
+        Product product = new Product(name, category, description, price);
+        try {
+            prodRepo.add(product);
+        }catch (BadRequestException ex) {
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity("Cannot add product!").build();
+        }
+        return Response.status(Response.Status.OK).entity(product).build();
+    }
+
+    @JWTTokenNeeded
+    @POST
+    @Path("/update")
+    public Response updateProduct(@FormDataParam("id") int id,
+                                  @FormDataParam("name") String name,
+                                  @FormDataParam("category") String category,
+                                  @FormDataParam("description") String description,
+                                  @FormDataParam("price") double price)
+    {
+        ProductRepository productRepo = new ProductRepository();
+        Product product = new Product(id, name, category, description, price);
+        try {
+            productRepo.update(product);
+        }catch (BadRequestException ex) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("Cannot add product!").build();
+        }
+        return Response.status(Response.Status.OK).entity(product).build();
+    }
+
+    @JWTTokenNeeded
+    @POST
+    @Path("/delete")
+    public Response deleteProduct(@FormDataParam("id") int id,
+                                  @FormDataParam("name") String name)
+    {
+        ProductRepository productRepo = new ProductRepository();
+        Product product = new Product(id, name);
+        try {
+            productRepo.update(product);
+        }catch (BadRequestException ex) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("Cannot delete product!").build();
+        }
+        return Response.status(Response.Status.OK).entity(product).build();
     }
 }

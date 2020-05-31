@@ -7,7 +7,17 @@ public class Product {
     private String description;
     private double price;
 
-    public Product() {}
+    public Product(String name, String category, String description, double price) {
+        setName(name);
+        setCategory(category);
+        setDescription(description);
+        setPrice(price);
+    }
+
+    public Product(long id, String name) {
+        setId(id);
+        setName(name);
+    }
 
     public Product(long id, String name, String category, String description, double price) {
         setId(id);
