@@ -29,11 +29,13 @@ public class UserController {
             user = userService.getUserByID(id);
         } catch (ServerErrorException ex) {
             return Response
-                    .serverError().build();
+                    .serverError()
+                    .build();
         } catch (BadRequestException ex) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("Something went wrong...").build();
+                    .entity("Something went wrong...")
+                    .build();
         }
 
         if (user == null) {
@@ -64,7 +66,8 @@ public class UserController {
         } catch (BadRequestException ex) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("This user cannot be created!").build();
+                    .entity("This user cannot be created!")
+                    .build();
         }
         return Response
                 .status(Response.Status.OK)
@@ -88,7 +91,8 @@ public class UserController {
         } catch (BadRequestException ex) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("Cannot update user!").build();
+                    .entity("Cannot update user!")
+                    .build();
         }
         return Response
                 .status(Response.Status.OK)
@@ -100,16 +104,22 @@ public class UserController {
     @POST
     @Path("/delete")
     public Response deleteUser(@FormDataParam("id") int id,
-                               @FormDataParam("username") String username
-                               ) {
+                               @FormDataParam("username") String username)
+    {
         UserRepository userRepo = new UserRepository();
         User user = new User(id, username);
         try {
             userRepo.remove(user);
         } catch (BadRequestException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Can not delete the user").build();
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("Can not delete the user")
+                    .build();
         }
-        return Response.status(Response.Status.OK).entity(user).build();
+        return Response
+                .status(Response.Status.OK)
+                .entity(user)
+                .build();
     }
 
 }

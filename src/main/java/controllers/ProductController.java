@@ -22,7 +22,8 @@ public class ProductController {
             products = productService.getListOfProducts();
         } catch (ServerErrorException ex) {
             return Response
-                    .serverError().build();
+                    .serverError()
+                    .build();
         }
 
         if (products == null) {
@@ -47,11 +48,13 @@ public class ProductController {
             product = productService.getProductByID(id);
         } catch (ServerErrorException ex) {
             return Response
-                    .serverError().build();
+                    .serverError()
+                    .build();
         } catch (BadRequestException ex) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("This product cannot be created").build();
+                    .entity("This product cannot be created")
+                    .build();
         }
 
         if (product == null) {
@@ -73,17 +76,17 @@ public class ProductController {
     public Response addProduct(@FormDataParam("name") String name,
                                @FormDataParam("category") String category,
                                @FormDataParam("description") String description,
-                               @FormDataParam("price") double price
-    )
+                               @FormDataParam("price") double price)
     {
         ProductRepository prodRepo = new ProductRepository();
         Product product = new Product(name, category, description, price);
         try {
             prodRepo.add(product);
-        }catch (BadRequestException ex) {
+        } catch (BadRequestException ex) {
             return Response
-                .status(Response.Status.BAD_REQUEST)
-                .entity("Cannot add product!").build();
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("Cannot add product!")
+                    .build();
         }
         return Response.status(Response.Status.OK).entity(product).build();
     }
@@ -101,12 +104,16 @@ public class ProductController {
         Product product = new Product(id, name, category, description, price);
         try {
             productRepo.update(product);
-        }catch (BadRequestException ex) {
+        } catch (BadRequestException ex) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("Cannot add product!").build();
+                    .entity("Cannot add product!")
+                    .build();
         }
-        return Response.status(Response.Status.OK).entity(product).build();
+        return Response
+                .status(Response.Status.OK)
+                .entity(product)
+                .build();
     }
 
     @JWTTokenNeeded
@@ -119,11 +126,15 @@ public class ProductController {
         Product product = new Product(id, name);
         try {
             productRepo.update(product);
-        }catch (BadRequestException ex) {
+        } catch (BadRequestException ex) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("Cannot delete product!").build();
+                    .entity("Cannot delete product!")
+                    .build();
         }
-        return Response.status(Response.Status.OK).entity(product).build();
+        return Response
+                .status(Response.Status.OK)
+                .entity(product)
+                .build();
     }
 }

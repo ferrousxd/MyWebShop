@@ -47,7 +47,8 @@ public class ProductRepository implements IProductRepository {
     public void remove(Product entity) {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
-            String sql = "DELETE FROM products WHERE id = " + entity.getId() + " name = '" + entity.getName() + "'";
+            String sql = "DELETE FROM products WHERE id = " + entity.getId()
+                    + " AND name = '" + entity.getName() + "'";
             stmt.execute(sql);
         } catch(SQLException ex) {
             throw new BadRequestException();
