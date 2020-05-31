@@ -71,4 +71,27 @@ public class UserController {
                 .entity(user)
                 .build();
     }
+
+    @POST
+    @Path("/update")
+    public Response getUserUpdate(@FormDataParam("id") int id,
+                                  @FormDataParam("name") String name,
+                                  @FormDataParam("surname") String surname,
+                                  @FormDataParam("password") String password)
+    {
+        UserRepository userrepo = new UserRepository();
+        User user = new User(id, name, surname, password);
+
+        try {
+            userrepo.update(user);
+        } catch (BadRequestException ex) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("Cannot update user!").build();
+        }
+        return Response
+                .status(Response.Status.OK)
+                .entity(user)
+                .build();
+    }
 }

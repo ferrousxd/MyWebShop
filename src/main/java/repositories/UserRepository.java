@@ -27,32 +27,17 @@ public class UserRepository implements IUserRepository {
         } catch(SQLException ex) {
             throw new BadRequestException();
         }
-//        try {
-//            Statement stmt = dbrepo.getConnection().createStatement();
-//            String sql = "INSERT INTO users(name, surname, username, password, birthday) VALUES (?, ?, ?, ?, ?)";
-//            PreparedStatement ps = dbrepo.getConnection().prepareStatement(sql);
-//            ps.setString(1, entity.getName());
-//            ps.setString(2, entity.getSurname());
-//            ps.setString(3, entity.getUsername());
-//            ps.setString(4, entity.getPassword());
-//            ps.setDate(5, entity.getBirthday());
-//            stmt.execute(sql);
-//        } catch(SQLException ex) {
-//            throw new BadRequestException();
-//        }
     }
 
     @Override
     public void update(User entity) {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
-            String sql = "UPDATE products SET" +
-                    " name = " + entity.getName()
-                    + ", surname = " + entity.getSurname()
-                    + ", username = " + entity.getUsername()
-                    + ", password = " + entity.getPassword()
-                    + ", birthday = " + entity.getBirthday()
-                    + " WHERE id = " + entity.getId();
+            String sql = "UPDATE users SET" +
+                    " name = '" + entity.getName()
+                    + "', surname = '" + entity.getSurname()
+                    + "', password = '" + entity.getPassword()
+                    + "' WHERE id = " + entity.getId();
             stmt.execute(sql);
         } catch(SQLException ex) {
             throw new BadRequestException();
@@ -63,7 +48,7 @@ public class UserRepository implements IUserRepository {
     public void remove(User entity) {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
-            String sql = "DELETE FROM products WHERE id = " + entity.getId();
+            String sql = "DELETE FROM products WHERE username = " + entity.getUsername();
             stmt.execute(sql);
         } catch(SQLException ex) {
             throw new BadRequestException();
