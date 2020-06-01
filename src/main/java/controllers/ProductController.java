@@ -88,7 +88,10 @@ public class ProductController {
                     .entity("Cannot add product!")
                     .build();
         }
-        return Response.status(Response.Status.OK).entity(product).build();
+        return Response
+                .status(Response.Status.OK)
+                .entity(product)
+                .build();
     }
 
     @JWTTokenNeeded

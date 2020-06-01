@@ -19,7 +19,7 @@ public class UserRepository implements IUserRepository {
     public void add(User entity) {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
-            String sql = "INSERT INTO users(name, surname, username, password, birthday) " +
+            String sql = "INSERT INTO users(user_fname, user_lname, username, user_password, user_birthday) " +
                     "VALUES('" + entity.getName() + "','"+ entity.getSurname() +
                     "','"+ entity.getUsername() +"','"+ entity.getPassword() +
                     "','"+ entity.getBirthday() +"')";
@@ -34,10 +34,10 @@ public class UserRepository implements IUserRepository {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
             String sql = "UPDATE users SET" +
-                    " name = '" + entity.getName()
-                    + "', surname = '" + entity.getSurname()
-                    + "', password = '" + entity.getPassword()
-                    + "' WHERE id = " + entity.getId();
+                    " user_fname = '" + entity.getName()
+                    + "', user_lname = '" + entity.getSurname()
+                    + "', user_password = '" + entity.getPassword()
+                    + "' WHERE user_id = " + entity.getId();
             stmt.execute(sql);
         } catch(SQLException ex) {
             throw new BadRequestException();
@@ -48,7 +48,7 @@ public class UserRepository implements IUserRepository {
     public void remove(User entity) {
         try {
             Statement stmt = dbrepo.getConnection().createStatement();
-            String sql = "DELETE FROM users WHERE id = " + entity.getId() +
+            String sql = "DELETE FROM users WHERE user_id = " + entity.getId() +
                 " AND username = '" + entity.getUsername() + "'";
             stmt.execute(sql);
         }catch (SQLException ex) {
@@ -65,11 +65,11 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 User user = new User (
-                        rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getString("surname"),
+                        rs.getLong("user_id"),
+                        rs.getString("user_fname"),
+                        rs.getString("user_lname"),
                         rs.getString("username"),
-                        rs.getDate("birthday")
+                        rs.getDate("user_birthday")
                 );
                 return user;
             }
@@ -86,13 +86,13 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public User getUserByID(long id) {
-        String sql = "SELECT * FROM users WHERE id = " + id + " LIMIT 1";
+        String sql = "SELECT * FROM users WHERE user_id = " + id + " LIMIT 1";
         return queryOne(sql);
     }
 
     @Override
     public User getUserByLogin(LoginData data) {
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1";
+        String sql = "SELECT * FROM users WHERE username = ? AND user_password = ? LIMIT 1";
         try {
             PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
             stmt.setString(1, data.getUsername());
@@ -100,12 +100,12 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 User user = new User (
-                        rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getString("surname"),
+                        rs.getLong("user_id"),
+                        rs.getString("user_fname"),
+                        rs.getString("user_lname"),
                         rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getDate("birthday")
+                        rs.getString("user_password"),
+                        rs.getDate("user_birthday")
                 );
                 return user;
             }

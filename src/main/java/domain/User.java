@@ -9,6 +9,7 @@ public class User {
     private String username;
     private String password;
     private Date birthday;
+    private String role;
 
     public User(long id, String username) {
         setId(id);
@@ -93,5 +94,13 @@ public class User {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
