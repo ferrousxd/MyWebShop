@@ -7,6 +7,11 @@ public class Order {
     private double sum;
     private long user_id;
     private long product_id;
+    private long order_id;
+
+    public Order(long order_id) {
+       setOrder_id(order_id);
+    }
 
     public Order(String username, String product_name, double product_price) {
         setUsername(username);
@@ -70,5 +75,13 @@ public class Order {
 
     public void setSum(double sum) {
         this.sum = sum;
+    }
+
+    public long getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(long order_id) {
+        this.order_id = order_id;
     }
 }

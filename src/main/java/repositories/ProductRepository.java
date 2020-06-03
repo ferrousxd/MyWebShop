@@ -20,7 +20,7 @@ public class ProductRepository implements IProductRepository {
             Statement stmt = dbrepo.getConnection().createStatement();
             String sql = "INSERT INTO products(product_name, product_category, product_description, product_price) " +
                     "VALUES('" + entity.getName() + "','"+ entity.getCategory() +
-                    "','"+ entity.getDescription() + "','"+ entity.getPrice() +"')";
+                    "','"+ entity.getDescription() + "', "+ entity.getPrice() +")";
             stmt.execute(sql);
         } catch(SQLException ex) {
             throw new BadRequestException();

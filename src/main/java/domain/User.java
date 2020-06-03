@@ -48,6 +48,16 @@ public class User {
         setBirthday(birthday);
     }
 
+    public User(long id, String name, String surname, String username, String password, Date birthday, String role) {
+        setId(id);
+        setName(name);
+        setSurname(surname);
+        setUsername(username);
+        setPassword(password);
+        setBirthday(birthday);
+        setRole(role);
+    }
+
     public long getId() {
         return id;
     }

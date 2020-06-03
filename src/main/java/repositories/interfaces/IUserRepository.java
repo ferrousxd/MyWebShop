@@ -8,4 +8,6 @@ public interface IUserRepository extends IEntityRepository<User> {
     User getUserByID(long id);
 
     User getUserByLogin(LoginData data);
+
+    User getUserByUsername(String username);
 }

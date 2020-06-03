@@ -2,6 +2,7 @@ package controllers;
 
 import domain.Product;
 import filters.customAnnotation.JWTTokenNeeded;
+import filters.customAnnotation.OnlyAdmin;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import repositories.ProductRepository;
 import services.ProductService;
@@ -39,7 +40,7 @@ public class ProductController {
         }
     }
 
-    @JWTTokenNeeded
+    @OnlyAdmin
     @GET
     @Path("/{id}")
     public Response getProductByID(@PathParam("id") long id) {
@@ -70,7 +71,7 @@ public class ProductController {
         }
     }
 
-    @JWTTokenNeeded
+    @OnlyAdmin
     @POST
     @Path("/add")
     public Response addProduct(@FormDataParam("name") String name,
@@ -119,7 +120,7 @@ public class ProductController {
                 .build();
     }
 
-    @JWTTokenNeeded
+    @OnlyAdmin
     @POST
     @Path("/delete")
     public Response deleteProduct(@FormDataParam("id") int id,

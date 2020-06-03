@@ -1,7 +1,6 @@
 package repositories;
 
 import domain.Order;
-import domain.Product;
 import repositories.interfaces.IDBRepository;
 import repositories.interfaces.IOrderRepository;
 
@@ -35,7 +34,31 @@ public class OrderRepository implements IOrderRepository {
 
     @Override
     public void remove(Order entity) {
+        try {
+            Statement stmt = dbrepo.getConnection().createStatement();
+            String sql = "DELETE FROM orders WHERE order_id = " + entity.getOrder_id();
+            stmt.execute(sql);
+        } catch(SQLException ex) {
+            throw new BadRequestException();
+        }
+    }
 
+    @Override
+    public Order queryOne(String sql) {
+        try {
+            Statement stmt = dbrepo.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                Order order = new Order (
+                        rs.getString("username"),
+                        rs.getDouble("sum")
+                );
+                return order;
+            }
+        } catch (SQLException throwables) {
+            throw new BadRequestException();
+        }
+        return null;
     }
 
     @Override
@@ -56,24 +79,6 @@ public class OrderRepository implements IOrderRepository {
         } catch (SQLException throwables) {
             throw new BadRequestException();
         }
-    }
-
-    @Override
-    public Order queryOne(String sql) {
-        try {
-            Statement stmt = dbrepo.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                Order order = new Order (
-                    rs.getString("username"),
-                    rs.getDouble("sum")
-                );
-                return order;
-            }
-        } catch (SQLException throwables) {
-            throw new BadRequestException();
-        }
-        return null;
     }
 
     @Override

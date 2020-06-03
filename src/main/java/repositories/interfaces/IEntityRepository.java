@@ -1,7 +1,5 @@
 package repositories.interfaces;
 
-import domain.Product;
-
 import java.util.List;
 
 public interface IEntityRepository<T> {

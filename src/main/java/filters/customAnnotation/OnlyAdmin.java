@@ -10,4 +10,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @javax.ws.rs.NameBinding
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})
-public @interface JWTTokenNeeded {}
+public @interface OnlyAdmin {}

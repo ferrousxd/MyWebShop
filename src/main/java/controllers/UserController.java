@@ -2,12 +2,15 @@ package controllers;
 
 import domain.User;
 import filters.customAnnotation.JWTTokenNeeded;
+import filters.customAnnotation.OnlyAdmin;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import repositories.UserRepository;
 import services.UserService;
 import services.interfaces.IUserService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.sql.Date;
 
@@ -81,10 +84,18 @@ public class UserController {
     public Response getUserUpdate(@FormDataParam("id") int id,
                                   @FormDataParam("name") String name,
                                   @FormDataParam("surname") String surname,
-                                  @FormDataParam("password") String password)
+                                  @FormDataParam("password") String password,
+                                  @Context ContainerRequestContext requestContext)
     {
         UserRepository userrepo = new UserRepository();
         User user = new User(id, name, surname, password);
+
+        if (!requestContext.getSecurityContext().isUserInRole("admin") &&
+                !requestContext.getSecurityContext().getUserPrincipal().getName().equals(user.getUsername())) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .build();
+        }
 
         try {
             userrepo.update(user);
@@ -104,10 +115,20 @@ public class UserController {
     @POST
     @Path("/delete")
     public Response deleteUser(@FormDataParam("id") int id,
-                               @FormDataParam("username") String username)
+                               @FormDataParam("username") String username,
+                               @Context ContainerRequestContext requestContext)
     {
         UserRepository userRepo = new UserRepository();
         User user = new User(id, username);
+
+        if (!requestContext.getSecurityContext().isUserInRole("admin") &&
+                !requestContext.getSecurityContext().getUserPrincipal().getName().equals(user.getUsername())) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("You do not permission to delete this account!")
+                    .build();
+        }
+
         try {
             userRepo.remove(user);
         } catch (BadRequestException ex) {

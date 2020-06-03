@@ -114,4 +114,28 @@ public class UserRepository implements IUserRepository {
         }
         return null;
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        try {
+            String sql = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User (
+                        rs.getLong("user_id"),
+                        rs.getString("user_fname"),
+                        rs.getString("user_lname"),
+                        rs.getString("username"),
+                        rs.getString("user_password"),
+                        rs.getDate("user_birthday"),
+                        rs.getString("user_role")
+                );
+            }
+        } catch (SQLException ex) {
+            throw new BadRequestException();
+        }
+        return null;
+    }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 @Path("/orders/users")
 public class OrderController {
     private IOrderService orderService = new OrderService();
+    private OrderRepository orderrepo = new OrderRepository();
 
     @JWTTokenNeeded
     @GET
@@ -66,7 +67,7 @@ public class OrderController {
     public Response addProductToOrder(@FormDataParam("user_id") int user_id,
                                       @FormDataParam("product_id") int product_id)
     {
-        OrderRepository orderrepo = new OrderRepository();
+
         Order order = new Order(user_id, product_id);
         try {
             orderrepo.add(order);
@@ -74,6 +75,26 @@ public class OrderController {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity("Cannot add product to your order!")
+                    .build();
+        }
+        return Response
+                .status(Response.Status.OK)
+                .entity(order)
+                .build();
+    }
+
+    @JWTTokenNeeded
+    @POST
+    @Path("/delete")
+    public Response deleteProductFromOrder(@FormDataParam("order_id") int order_id)
+    {
+        Order order = new Order(order_id);
+        try {
+            orderrepo.remove(order);
+        } catch (BadRequestException ex) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("Cannot delete product from your order!")
                     .build();
         }
         return Response

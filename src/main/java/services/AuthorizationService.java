@@ -24,6 +24,11 @@ public class AuthorizationService implements IAuthorizationService {
         return token;
     }
 
+    @Override
+    public User getUserByUsername(String issuer) {
+        return userrepo.getUserByUsername(issuer);
+    }
+
     private User signIn(LoginData data) throws Exception {
         User user = userrepo.getUserByLogin(data);
         if (user == null) {

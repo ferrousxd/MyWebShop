@@ -18,6 +18,5 @@ public class PostgresRepository implements IDBRepository {
         } catch (SQLException ex) {
             throw new ServerErrorException("Cannot connect to DB: " + ex.getMessage(), Response.Status.INTERNAL_SERVER_ERROR);
         }
-
     }
 }
