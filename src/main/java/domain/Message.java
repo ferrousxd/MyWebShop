@@ -4,12 +4,19 @@ public class Message {
     private String sender;
     private String receiver;
     private String message;
-    private long message_id;
+    private long sender_id;
+    private long receiver_id;
 
-    public Message(String sender, String receiver, String message) {
-        setSender(sender);
-        setReceiver(receiver);
+    public Message(long sender_id, String message, long receiver_id) {
+        setSender_id(sender_id);
         setMessage(message);
+        setReceiver_id(receiver_id);
+    }
+
+    public Message(String sender, String message, String receiver) {
+        setSender(sender);
+        setMessage(message);
+        setReceiver(receiver);
     }
 
     public String getSender() {
@@ -36,11 +43,19 @@ public class Message {
         this.message = message;
     }
 
-    public long getMessage_id() {
-        return message_id;
+    public long getSender_id() {
+        return sender_id;
     }
 
-    public void setMessage_id(long message_id) {
-        this.message_id = message_id;
+    public void setSender_id(long sender_id) {
+        this.sender_id = sender_id;
+    }
+
+    public long getReceiver_id() {
+        return receiver_id;
+    }
+
+    public void setReceiver_id(long receiver_id) {
+        this.receiver_id = receiver_id;
     }
 }

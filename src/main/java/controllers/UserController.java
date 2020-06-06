@@ -2,7 +2,6 @@ package controllers;
 
 import domain.User;
 import filters.customAnnotation.JWTTokenNeeded;
-import filters.customAnnotation.OnlyAdmin;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import repositories.UserRepository;
 import services.UserService;
@@ -13,14 +12,34 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.sql.Date;
+import java.util.List;
 
 @Path("/users")
 public class UserController {
     private IUserService userService = new UserService();
 
     @GET
-    public String index() {
-        return "Hello from User!";
+    public Response getListOfUsers() {
+        List<User> users;
+        try {
+            users = userService.getListOfUsers();
+        } catch (ServerErrorException ex) {
+            return Response
+                    .serverError()
+                    .build();
+        }
+
+        if (users == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity("Users list is empty!")
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(users)
+                    .build();
+        }
     }
 
     @JWTTokenNeeded

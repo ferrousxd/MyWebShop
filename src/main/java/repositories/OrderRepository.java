@@ -82,6 +82,11 @@ public class OrderRepository implements IOrderRepository {
     }
 
     @Override
+    public List<Order> queryThree(String sql) {
+        return null;
+    }
+
+    @Override
     public Order getOrderSumByUserID(long id) {
         String sql = "SELECT username, SUM(product_price) " +
                 "FROM orders o JOIN users u ON o.user_id = u.user_id " +

@@ -31,22 +31,18 @@ public class SecurityFilter implements ContainerRequestFilter {
     private static final String AUTHENTICATION_SCHEME = "Bearer ";
 
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        // Get the Authorization header from the request
         String authorizationHeader =
                 requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-        // Validate the Authorization header
         if (!isTokenBasedAuthentication(authorizationHeader)) {
             abortWithUnauthorized(requestContext);
             return;
         }
 
-        // Extract the token from the Authorization header
         String token = authorizationHeader
                 .substring(AUTHENTICATION_SCHEME.length()).trim();
 
         try {
-            // Validate the token
             final User user = validateToken(token);
 
             requestContext.setSecurityContext(new SecurityContext() {
@@ -77,18 +73,11 @@ public class SecurityFilter implements ContainerRequestFilter {
     }
 
     private boolean isTokenBasedAuthentication(String authorizationHeader) {
-
-        // Check if the Authorization header is valid
-        // It must not be null and must be prefixed with "Bearer" plus a whitespace
-        // The authentication scheme comparison must be case-insensitive
         return authorizationHeader != null && authorizationHeader.toLowerCase()
                 .startsWith(AUTHENTICATION_SCHEME.toLowerCase());
     }
 
     private void abortWithUnauthorized(ContainerRequestContext requestContext) {
-
-        // Abort the filter chain with a 401 status code response
-        // The WWW-Authenticate header is sent along with the response
         requestContext.abortWith(
                 Response.status(Response.Status.UNAUTHORIZED)
                         .header(HttpHeaders.WWW_AUTHENTICATE,
@@ -98,7 +87,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 
     private User validateToken(String token) throws Exception {
         String secretWord = "AFOUYGEIBEGRYR4IU3UH4TYUHOIT4Q3*@#$U!UY$@$$OFJS(@";
-        Jws<Claims> result = Jwts.parserBuilder() // You can do with this result whatever you want
+        Jws<Claims> result = Jwts.parserBuilder()
                 .setSigningKey(Keys.hmacShaKeyFor(secretWord.getBytes()))
                 .build().parseClaimsJws(token);
 

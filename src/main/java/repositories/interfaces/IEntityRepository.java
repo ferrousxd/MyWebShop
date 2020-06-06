@@ -8,4 +8,5 @@ public interface IEntityRepository<T> {
     void remove(T entity);
     T queryOne(String sql);
     List<T> queryTwo(String sql);
+    List<T> queryThree(String sql);
 }

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements IUserRepository {
@@ -81,6 +82,25 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public List<User> queryTwo(String sql) {
+        try {
+            List<User> users = new ArrayList<>();
+            Statement stmt = dbrepo.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                User user = new User (
+                        rs.getLong("user_id"),
+                        rs.getString("username")
+                );
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException throwables) {
+            throw new BadRequestException();
+        }
+    }
+
+    @Override
+    public List<User> queryThree(String sql) {
         return null;
     }
 
@@ -137,5 +157,11 @@ public class UserRepository implements IUserRepository {
             throw new BadRequestException();
         }
         return null;
+    }
+
+    @Override
+    public List<User> getListOfUsers() {
+        String sql = "SELECT user_id, username FROM users";
+        return queryTwo(sql);
     }
 }

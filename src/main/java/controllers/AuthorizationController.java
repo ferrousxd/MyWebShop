@@ -27,6 +27,4 @@ public class AuthorizationController {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
-
-
 }
