@@ -25,8 +25,8 @@ public class MessageRepository implements IMessageRepository {
 
     @Override
     public List<Message> getMessageListByReceiver(long receiver_id) {
-        String sql = "SELECT urec.username as receiver, message, usend.username as sender\n" +
-                "FROM messages m JOIN users usend ON m.sender_id = usend.user_id \n" +
+        String sql = "SELECT urec.username as receiver, message, usend.username as sender " +
+                "FROM messages m JOIN users usend ON m.sender_id = usend.user_id " +
                 "JOIN users urec ON m.receiver_id = urec.user_id WHERE urec.user_id = " + receiver_id;
         return queryTwo(sql);
     }

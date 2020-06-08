@@ -9,14 +9,14 @@ public class Order {
     private long product_id;
     private long order_id;
 
-    public Order(long order_id) {
-       setOrder_id(order_id);
-    }
-
     public Order(String username, String product_name, double product_price) {
         setUsername(username);
         setProduct_name(product_name);
         setProduct_price(product_price);
+    }
+
+    public Order(long order_id) {
+       setOrder_id(order_id);
     }
 
     public Order(long user_id, long product_id) {

@@ -52,11 +52,9 @@ public class UserRepository implements IUserRepository {
             String sql = "DELETE FROM users WHERE user_id = " + entity.getId() +
                 " AND username = '" + entity.getUsername() + "'";
             stmt.execute(sql);
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new BadRequestException();
         }
-
-
     }
 
     @Override

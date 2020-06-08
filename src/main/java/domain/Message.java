@@ -7,16 +7,16 @@ public class Message {
     private long sender_id;
     private long receiver_id;
 
-    public Message(long sender_id, String message, long receiver_id) {
-        setSender_id(sender_id);
-        setMessage(message);
-        setReceiver_id(receiver_id);
-    }
-
     public Message(String sender, String message, String receiver) {
         setSender(sender);
         setMessage(message);
         setReceiver(receiver);
+    }
+
+    public Message(long sender_id, String message, long receiver_id) {
+        setSender_id(sender_id);
+        setMessage(message);
+        setReceiver_id(receiver_id);
     }
 
     public String getSender() {

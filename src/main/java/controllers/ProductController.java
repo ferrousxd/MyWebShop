@@ -40,7 +40,7 @@ public class ProductController {
         }
     }
 
-    @OnlyAdmin
+    @JWTTokenNeeded
     @GET
     @Path("/{id}")
     public Response getProductByID(@PathParam("id") long id) {
@@ -95,7 +95,7 @@ public class ProductController {
                 .build();
     }
 
-    @JWTTokenNeeded
+    @OnlyAdmin
     @POST
     @Path("/update")
     public Response updateProduct(@FormDataParam("id") int id,
@@ -111,7 +111,7 @@ public class ProductController {
         } catch (BadRequestException ex) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("Cannot add product!")
+                    .entity("Product was successfully updated!")
                     .build();
         }
         return Response

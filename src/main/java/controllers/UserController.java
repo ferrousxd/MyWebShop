@@ -93,7 +93,7 @@ public class UserController {
         }
         return Response
                 .status(Response.Status.OK)
-                .entity(user)
+                .entity("User successfully created!")
                 .build();
     }
 

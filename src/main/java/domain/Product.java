@@ -7,16 +7,10 @@ public class Product {
     private String description;
     private double price;
 
-    public Product(String name, String category, String description, double price) {
-        setName(name);
-        setCategory(category);
-        setDescription(description);
-        setPrice(price);
-    }
-
-    public Product(long id, String name) {
+    public Product(long id, String name, double price) {
         setId(id);
         setName(name);
+        setPrice(price);
     }
 
     public Product(long id, String name, String category, String description, double price) {
@@ -27,10 +21,16 @@ public class Product {
         setPrice(price);
     }
 
-    public Product(long id, String name, double price) {
+    public Product(String name, String category, String description, double price) {
+        setName(name);
+        setCategory(category);
+        setDescription(description);
+        setPrice(price);
+    }
+
+    public Product(long id, String name) {
         setId(id);
         setName(name);
-        setPrice(price);
     }
 
     public long getId() {
